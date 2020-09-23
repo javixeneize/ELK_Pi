@@ -1,0 +1,24 @@
+version: '2.1'
+
+services:
+  elasticsearch:
+    image: 'javidr/elastic_pi'
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9200"]
+      interval: 20s
+      retries: 5
+    volumes:
+      - ~/elasticvolume:/var/lib/elasticsearch/
+
+
+  kibana:
+    image: 'javidr/kibana_pi'
+    ports:
+      - "5601:5601"
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+
