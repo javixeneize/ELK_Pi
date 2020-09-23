@@ -10,6 +10,8 @@ services:
       test: ["CMD", "curl", "-f", "http://localhost:9200"]
       interval: 20s
       retries: 5
+    volumes:
+      - ~/elasticvolume:/var/lib/elasticsearch/
 
 
   kibana:
@@ -19,3 +21,4 @@ services:
     depends_on:
       elasticsearch:
         condition: service_healthy
+
